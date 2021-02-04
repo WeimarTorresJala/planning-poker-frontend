@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { QuestionService } from '../../services/question.service';
+import { IQuestion } from '../../interfaces/question';
 
 @Component({
   selector: 'app-questions',
@@ -8,15 +10,50 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class QuestionsComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private questionService: QuestionService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.sessionId = params['sessionId'];
       console.log(this.sessionId);
     });
+
+    this.getQuestions();
   }
 
   sessionId: string = '';
 
+  getQuestions() {
+    this.questionService.getQuestions(this.sessionId)
+      .subscribe(
+        (res: IQuestion[]) => {
+          this.questions = [];
+
+          for (let index = 0; index < res.length; index++) {
+            this.questions.push(res[index].question);
+          }
+        },
+        err => console.log(err)
+      );
+  }
+
+  questions: string[] = [];
+
+  addQuestion(question: HTMLInputElement): boolean {
+    if (question.value !== "") {
+      this.questionService.addQuestion(this.sessionId, question.value)
+        .subscribe(
+          res => {
+            this.getQuestions();
+          },
+          err => console.log(err)
+        );
+    }
+
+    return false;
+  }
+
+  btnClick() {
+      this.router.navigate([`/create/${this.sessionId}/user`]);
+  };
 }

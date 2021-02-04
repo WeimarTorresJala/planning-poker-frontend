@@ -1,1 +1,28 @@
-<p>questions works!</p>
+<div class="col-lg-7 mx-auto">
+    <div class="card text-center">
+        <div class="card-header">
+            Add a question
+        </div>
+        <div class="card-body">
+            <form (submit)="addQuestion(question)">
+                <div class="mb-5">
+                    <label for="sessionName" class="form-label">Question</label>
+                    <input class="form-control" id="sessionName" required #question>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <ul class="list-group mt-5">
+        <li class="list-group-item active" aria-current="true">Questions</li>
+        <div *ngFor="let question of questions">
+            <li class="list-group-item">{{question}}</li>
+        </div>
+    </ul>
+
+    <button type="button" class="btn btn-primary mt-5 mb-5" (click)="btnClick();">Continue</button>
+</div>

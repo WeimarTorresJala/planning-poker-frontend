@@ -14,21 +14,20 @@ export class CreateComponent implements OnInit {
   constructor(private sessionService: SessionService, private typeService: TypeService, private router: Router) { }
 
   ngOnInit(): void {
+    this.getTypes();
+  }
+
+  getTypes() {
     this.typeService.getTypes()
       .subscribe(
         (res: IType[]) => {
-          this.originalTypes = res;
-      
-          for (let index = 0; index < this.originalTypes.length; index++) {
-            this.types.push([this.originalTypes[index]._id + '', this.originalTypes[index].numbers.join(", ")]);
+          for (let index = 0; index < res.length; index++) {
+            this.types.push([res[index]._id + '', res[index].numbers.join(", ")]);
           }
         },
         err => console.log(err)
       );
-
   }
-
-  originalTypes: IType[] = [];
 
   types: [string, string][] = [];
 
@@ -49,5 +48,4 @@ export class CreateComponent implements OnInit {
 
     return false;
   }
-
 }
