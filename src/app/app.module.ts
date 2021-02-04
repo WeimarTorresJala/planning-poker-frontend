@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { UserComponent } from './components/user/user.component';
 import { QuestionsComponent } from './components/questions/questions.component';
+import { SessionComponent } from './components/session/session.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { QuestionsComponent } from './components/questions/questions.component';
     AboutComponent,
     CreateComponent,
     UserComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    SessionComponent
   ],
   imports: [
     BrowserModule,

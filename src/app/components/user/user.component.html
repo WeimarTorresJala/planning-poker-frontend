@@ -1,1 +1,16 @@
-<p>user works!</p>
+<div class="col-lg-7 mx-auto">
+    <div class="card text-center">
+        <div class="card-header">
+            User name
+        </div>
+        <div class="card-body">
+            <form (submit)="addUser(userName)">
+                <div class="mb-5">
+                    <input class="form-control" id="userName" required #userName>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Continue</button>
+            </form>
+        </div>
+    </div>
+</div>

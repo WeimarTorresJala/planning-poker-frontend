@@ -5,6 +5,7 @@ import { AboutComponent } from './components/about/about.component';
 import { CreateComponent } from './components/create/create.component';
 import { UserComponent } from './components/user/user.component';
 import { QuestionsComponent } from './components/questions/questions.component';
+import { SessionComponent } from './components/session/session.component';
 
 const routes: Routes = [
   {
@@ -27,9 +28,10 @@ const routes: Routes = [
     path: 'about',
     component: AboutComponent
   },
-  // {
-  //   path: 'session/:id'
-  // },
+  {
+    path: 'session/:sessionId/user/:userName',
+    component: SessionComponent
+  },
   {
     path: '',
     redirectTo: '/join-create',
