@@ -1,0 +1,36 @@
+<div class="col-lg-7 mx-auto">
+    <div class="card text-center">
+        <div class="card-header">
+            Create a Session
+        </div>
+        <div class="card-body">
+            <form (submit)="createSession(name)">
+                <div class="mb-5">
+                    <label for="sessionName" class="form-label">Name</label>
+                    <input class="form-control" id="sessionName" required #name>
+                </div>
+
+                <!-- <div class="mb-5">
+                    <label for="ownerName" class="form-label">Name</label>
+                    <input class="form-control" id="sessionName" required #name>
+                </div> -->
+
+                <div class="mb-5">
+                    <label for="sessionType" class="form-label mr-5">Type:</label>
+                    <select [(ngModel)]="type" name="types" id="sessionType" class="form-select btn btn-dark" aria-label="Default select example">
+                        <option *ngFor="let type of types" [ngValue]="type">
+                            {{type[1]}}
+                        </option>
+                    </select>
+                </div>
+
+                <!-- <div class="mb-5">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" required #password>
+                </div> -->
+
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
