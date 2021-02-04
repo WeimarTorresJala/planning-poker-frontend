@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from '../../services/session.service';
+import { TypeService } from '../../services/type.service';
+import { IType } from '../../interfaces/type';
 
 @Component({
   selector: 'app-create',
@@ -9,33 +11,42 @@ import { SessionService } from '../../services/session.service';
 })
 export class CreateComponent implements OnInit {
 
-  constructor(private sessionService: SessionService, private router:Router) { }
+  constructor(private sessionService: SessionService, private typeService: TypeService, private router: Router) { }
 
   ngOnInit(): void {
+    this.typeService.getTypes()
+      .subscribe(
+        (res: IType[]) => {
+          this.originalTypes = res;
+      
+          for (let index = 0; index < this.originalTypes.length; index++) {
+            this.types.push([this.originalTypes[index]._id + '', this.originalTypes[index].numbers.join(", ")]);
+          }
+        },
+        err => console.log(err)
+      );
+
   }
 
-  types: [ number, string[] ][] = [
-    [0, ["1","1","1","1","1"]],
-    [1, ["2","2","2","2","2"]]
-  ];
+  originalTypes: IType[] = [];
 
-  type: [ number, string[] ] = this.types[0];
+  types: [string, string][] = [];
 
-  setNewType(type: [ number, string[] ]): void {
-    console.log(type);
-    this.type = type;
-  }
+  type: [string, string] = this.types[0];
 
   createSession(name: HTMLInputElement): boolean {
     this.sessionService.createSession(name.value, this.type[0])
-    .subscribe((res: {
-      sessionResp?: {
-        _id: string
-      }
-    }) => {
-      this.router.navigate([`/create/${res.sessionResp?._id}/user`]);
-    }, err => console.log(err));
-    
+      .subscribe(
+        (res: {
+          sessionResp?: {
+            _id: string
+          }
+        }) => {
+          this.router.navigate([`/create/${res.sessionResp?._id}/questions`]);
+        },
+        err => console.log(err)
+      );
+
     return false;
   }
 

@@ -9,7 +9,7 @@ export class SessionService {
 
   constructor(private http: HttpClient) { }
 
-  createSession(name: string, type: number) {
+  createSession(name: string, type: string) {
     const body = {
       name: name,
       type: type
