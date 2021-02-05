@@ -1,1 +1,31 @@
-<p>session works!</p>
+<h1 class="text-center mb-5">{{session.name}}</h1>
+
+<div *ngFor="let question of questions">
+
+    <div class="card text-center">
+        <div class="card-header">
+            {{question.question}} Average: {{question.average}}
+        </div>
+        <div class="card-body">
+            <div *ngIf="!question.vote" class="btn-group" role="group" aria-label="Basic outlined example">
+                <div *ngFor="let number of type.numbers">
+                    <div class="mr-2 ml-2">
+                        <button (click)="selectCard(question, number)" type="button" class="btn btn-outline-secondary">
+                            <h1>{{number}}</h1>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="question.vote">
+                <div *ngFor="let value of question.votes">
+                    <ul class="list-group list-group-horizontal">
+                        <li class="list-group-item">{{value[0]}}</li>
+                        <li class="list-group-item">{{value[1]}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

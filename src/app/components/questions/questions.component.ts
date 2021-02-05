@@ -15,7 +15,6 @@ export class QuestionsComponent implements OnInit {
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.sessionId = params['sessionId'];
-      console.log(this.sessionId);
     });
 
     this.getQuestions();

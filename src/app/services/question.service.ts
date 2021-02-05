@@ -6,12 +6,12 @@ import { IQuestion } from '../interfaces/question';
   providedIn: 'root'
 })
 export class QuestionService {
-  URI = 'http://localhost:3000/api/sessions';
+  URI = 'http://localhost:3000/api';
 
   constructor(private http: HttpClient) { }
 
   getQuestions(sessionId: string) {
-    return this.http.get<IQuestion[]>(`${this.URI}/${sessionId}/questions`);
+    return this.http.get<IQuestion[]>(`${this.URI}/sessions/${sessionId}/questions`);
   }
 
   addQuestion(sessionId: string, question: string) {
@@ -19,6 +19,15 @@ export class QuestionService {
       question: question
     }
 
-    return this.http.post(`${this.URI}/${sessionId}/questions`, body);
+    return this.http.post(`${this.URI}/sessions/${sessionId}/questions`, body);
+  }
+
+  updateQuestion(questionId: string | unknown, userName: string, number: number) {
+    const body = {
+      userName: userName,
+      number: number
+    }
+
+    return this.http.put(`${this.URI}/questions/${questionId}`, body);
   }
 }

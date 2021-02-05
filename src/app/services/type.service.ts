@@ -11,6 +11,10 @@ export class TypeService {
 
   constructor(private http: HttpClient) { }
 
+  getType(typeId: string) {
+    return this.http.get<IType>(`${this.URI}/${typeId}`);
+  }
+
   getTypes() {
     return this.http.get<IType[]>(this.URI);
   }
