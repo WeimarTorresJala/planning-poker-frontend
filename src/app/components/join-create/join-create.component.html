@@ -4,16 +4,13 @@
           Join
         </div>
         <div class="card-body">
-            <form>
+            <form (submit)="joinSession(sessionCode)">
                 <div class="mb-5">
                     <label for="sessionCode" class="form-label">Session code</label>
-                    <input class="form-control" id="sessionCode" aria-describedby="sessionCodeHelp">
+                    <input class="form-control" id="sessionCode" aria-describedby="sessionCodeHelp" #sessionCode>
                     <div id="sessionCodeHelp" class="form-text">Session code provided by the tutor</div>
                 </div>
-                <div class="mb-5">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
-                </div>
+                
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
         </div>

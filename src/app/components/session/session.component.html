@@ -1,8 +1,8 @@
 <h1 class="text-center mb-5">{{session.name}}</h1>
 
-<div *ngFor="let question of questions">
+<div class="mb-5" *ngFor="let question of questions">
 
-    <div class="card text-center">
+    <div class="card text-center mb-1">
         <div class="card-header">
             {{question.question}} Average: {{question.average}}
         </div>
