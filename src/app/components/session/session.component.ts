@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { QuestionService } from '../../services/question.service';
 import { SessionService } from '../../services/session.service';
 import { TypeService } from '../../services/type.service';
+import { SocketService } from '../../services/socket.service';
 import { IQuestion } from '../../interfaces/question';
 import { ISession } from '../../interfaces/session';
 import { IType } from '../../interfaces/type';
@@ -13,7 +14,7 @@ import { IType } from '../../interfaces/type';
   styleUrls: ['./session.component.css']
 })
 export class SessionComponent implements OnInit {
-  constructor(private questionService: QuestionService, private sessionService: SessionService, private typeService: TypeService, private route: ActivatedRoute) { }
+  constructor(private socketService: SocketService, private questionService: QuestionService, private sessionService: SessionService, private typeService: TypeService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -23,6 +24,8 @@ export class SessionComponent implements OnInit {
 
     this.getQuestions();
     this.getSession();
+
+    this.initIoConnection();
   }
 
   sessionId: string = '';
@@ -94,6 +97,9 @@ export class SessionComponent implements OnInit {
         },
         err => console.log(err)
       );
+
+    this.sendMessage();
+    // this.initIoConnection();
   }
 
   setAverage() {
@@ -105,4 +111,28 @@ export class SessionComponent implements OnInit {
       this.questions[index].average = average;
     }
   }
+
+  ioConnection: any;
+
+  private initIoConnection(): void {
+    this.socketService.initSocket();
+
+    this.ioConnection = this.socketService.onUpdate()
+      .subscribe((message: string) => {
+        this.getQuestions();
+      });
+
+    this.socketService.onEvent("connect")
+      .subscribe(() => {
+      });
+
+    this.socketService.onEvent("disconnect")
+      .subscribe(() => {
+      });
+  }
+
+  public sendMessage(): void {
+    this.socketService.send();
+  }
+
 }
