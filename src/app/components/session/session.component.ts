@@ -98,7 +98,8 @@ export class SessionComponent implements OnInit {
         err => console.log(err)
       );
 
-      this.sendMessage();
+    this.sendMessage();
+    // this.initIoConnection();
   }
 
   setAverage() {
@@ -116,31 +117,22 @@ export class SessionComponent implements OnInit {
   private initIoConnection(): void {
     this.socketService.initSocket();
 
-    // this.ioConnection = this.socketService.onMessage()
-    //   .subscribe((message: any) => {
-    // });
+    this.ioConnection = this.socketService.onUpdate()
+      .subscribe((message: string) => {
+        this.getQuestions();
+      });
 
-    this.socketService.onEvent('connect')
+    this.socketService.onEvent("connect")
       .subscribe(() => {
-      console.log('connected');
-    },
-    (err) => {
-      console.log(err);
-    });
+      });
 
-    console.log("test 3");
-    
-
-    // this.socketService.onEvent('disconnect')
-    //   .subscribe(() => {
-    //   console.log('disconnected');
-    // },
-    // (err) => {
-    //   console.log(err);
-    // });
+    this.socketService.onEvent("disconnect")
+      .subscribe(() => {
+      });
   }
 
   public sendMessage(): void {
     this.socketService.send();
   }
+
 }

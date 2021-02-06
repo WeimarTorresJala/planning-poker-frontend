@@ -11,30 +11,24 @@ const SERVER_URL = 'http://localhost:3000';
 export class SocketService {
   private socket: any;
 
-  constructor() { }
-
   public initSocket(): void {
     this.socket = socketIo(SERVER_URL);
-    // this.socket = socketIo({transports: ['websocket']});
-
-    console.log("test");
-    
   }
 
   public send(): void {
-    this.socket.emit('message');
+    console.log('Update');
+
+    this.socket.emit('update', 'Update');
   }
 
-  public onMessage(): Observable<any> {
-    return new Observable<any>(observer => {
-      this.socket.on('message', (data: any) => observer.next(data));
+  public onUpdate(): Observable<string> {
+    return new Observable<string>(observer => {
+        this.socket.on('update', (data: string) => observer.next(data));
     });
-  }
+}
 
   public onEvent(event: string): Observable<any> {
     return new Observable<Event>(observer => {
-      console.log("test 2");
-      
       this.socket.on(event, () => observer.next());
     });
   }
